@@ -3,9 +3,6 @@
 # python setup.py install
 import telebot
 from telebot import types
-import PIL
-import random
-import os
 bot = telebot.TeleBot('5828640605:AAHQ-VQJrWNQ_LLJ3kbYzLpDCNostqdBi4o')
 
 
