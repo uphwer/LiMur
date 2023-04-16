@@ -52,18 +52,45 @@ def answer(call):
                                           "Лингвист — Алина Осинцева", reply_markup=markup)
     elif call.data == 'oxford':
         markup = types.InlineKeyboardMarkup()
+        but_oxfex = types.InlineKeyboardButton(text='Примеры', callback_data='oxfex1')
         but_oxf1 = types.InlineKeyboardButton(text='Упражнение №1', callback_data='oxf1')
         but_oxf2 = types.InlineKeyboardButton(text='Упражнение №2', callback_data='oxf2')
-        markup.add(but_oxf1)
-        markup.add(but_oxf2)
-        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text='Выбери упражнение:', reply_markup=markup)
+        but_back = types.InlineKeyboardButton(text='Назад', callback_data='start')
+        markup.add(but_oxfex, but_oxf1, but_oxf2)
+        markup.add(but_back)
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text='Оксфордская запятая.\n'
+                                                                                             'Оскфордская запятая (Oxford comma) — запятая, ставящаяся перед союзами and, or или nor,\n'
+                                                                                             'а также перед последним пунктом в списке перечисляемых элементов.', reply_markup=markup)
+    elif call.data == 'oxfex1':
+        markup = types.InlineKeyboardMarkup()
+        but_oxfnex = types.InlineKeyboardButton(text='Следущая страница >>', callback_data='oxfex2')
+        markup.add(but_oxfnex)
+        ex1 = open('photos/example-1.jpg', 'rb')
+        bot.send_photo(call.message.chat.id, ex1, 'We invited the rhinoceri, Washington, and Lincoln.\n'
+                                                  '– Мы пригласили носорогов, Вашингтона и Линкольна.\n'
+                                                  '\n'
+                                                  'В этом предложении присутствует оксфордская запятая.\n'
+                                                  'Благодаря ей мы понимаем, что на мероприятие должны прийти два человека (Вашингтон и Линкольн) и носороги.\n'
+                                                  'Зачем там носороги – это уже другой вопрос.', reply_markup=markup)
+    elif call.data == 'oxfex2':
+        markup = types.InlineKeyboardMarkup()
+        but_oxfnex1 = types.InlineKeyboardButton(text='Упражнение №1', callback_data='oxf1')
+        but_oxfnex2 = types.InlineKeyboardButton(text='Упражнение №2', callback_data='oxf2')
+        markup.add(but_oxfnex1, but_oxfnex2)
+        ex2 = open('photos/example-2.jpg', 'rb')
+        bot.send_photo(call.message.chat.id, ex2, 'We invited the rhinoceri, Washington and Lincoln.\n'
+                                                  '– Мы пригласили носорогов: Вашингтона и Линкольна.\n'
+                                                  '\n'
+                                                  'Запятая в английском предложении выполняет функцию двоеточия или тире.\n'
+                                                  'В этом предложении отсутствие оксфордской запятой совершенно меняет смысл:\n'
+                                                  'на мероприятие должны прийти носороги по имени Вашингтон и Линкольн.', reply_markup=markup)
 
 @bot.message_handler(content_types=["text"])
 def text(message):
     if message.text.strip() == 'Главная 🏡':
         start(message)
     else:
-        cat = open('20141703160331.jpg', 'rb')
+        cat = open('photos/20141703160331.jpg', 'rb')
         bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
 
 print('Working...')
