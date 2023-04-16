@@ -84,6 +84,9 @@ def answer(call):
                                                   'Запятая в английском предложении выполняет функцию двоеточия или тире.\n'
                                                   'В этом предложении отсутствие оксфордской запятой совершенно меняет смысл:\n'
                                                   'на мероприятие должны прийти носороги по имени Вашингтон и Линкольн.', reply_markup=markup)
+    elif call.data == 'oxf1':
+        markup = types.InlineKeyboardMarkup()
+        but_ex1 = types.InlineKeyboardButton(text='К заданиям >>', callback_data='oxfexs1')
 
 @bot.message_handler(content_types=["text"])
 def text(message):
