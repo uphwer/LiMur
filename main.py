@@ -8,7 +8,6 @@ bot = telebot.TeleBot('5828640605:AAHQ-VQJrWNQ_LLJ3kbYzLpDCNostqdBi4o')
 
 @bot.message_handler(commands=["help"])
 def help(message):
-    photo = open()
     bot.send_message(message.chat.id, "Список команд бота:\n"
                                       "/start — Запустить бота\n"
                                       "/main — Главное меню\n"
@@ -51,6 +50,13 @@ def answer(call):
         bot.send_message(call.message.chat.id, "Создатели бота:", reply_markup='')
         bot.send_message(call.message.chat.id, "Программист — Тимур Гаффоров\n"
                                           "Лингвист — Алина Осинцева", reply_markup=markup)
+    elif call.data == 'oxford':
+        markup = types.InlineKeyboardMarkup()
+        but_oxf1 = types.InlineKeyboardButton(text='Упражнение №1', callback_data='oxf1')
+        but_oxf2 = types.InlineKeyboardButton(text='Упражнение №2', callback_data='oxf2')
+        markup.add(but_oxf1)
+        markup.add(but_oxf2)
+        bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.id, text='Выбери упражнение:', reply_markup=markup)
 
 @bot.message_handler(content_types=["text"])
 def text(message):
