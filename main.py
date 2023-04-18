@@ -102,10 +102,74 @@ def text(message):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         but_main = types.KeyboardButton("Главная 🏡")
         markup.add(but_main)
-        bot.send_photo(message.chat.id, 'Hello world')
+        photo = open('photos/mmvxyri.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo, 'Задание №1\n'
+                                               '\n'
+                                               'Timur photographed two ostriches, Timothy(,) and Max.', reply_markup=markup)
+        bot.register_next_step_handler(message, oxf_ex1_num1)
     else:
         cat = open('photos/ty26hmpfe3f51.jpg', 'rb')
         bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
+def oxf_ex1_num1(message):
+    if message.text.strip() == 'Timur photographed two ostriches, Timothy and Max.':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        but_main = types.KeyboardButton("Главная 🏡")
+        markup.add(but_main)
+        photo = open('photos/people-chatting-house-party-3574393.jpg', 'rb')
+        bot.send_message(message.chat.id, 'All right!')
+        bot.send_photo(message.chat.id, photo, 'Задание №2\n'
+                                               '\n'
+                                               'Her friends, Steven(,) and Sarah, were present at the party.', reply_markup=markup)
+        bot.register_next_step_handler(message, oxf_ex1_num2)
+    elif message.text.strip() == 'Timur photographed two ostriches, Timothy, and Max.':
+        photo = open('photos/mmvxyri1.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo, 'Неправильно, попробуй ещё раз!')
+        bot.register_next_step_handler(message, oxf_ex1_num1)
+    elif message.text.strip() == 'Главная 🏡':
+        start(message)
+    else:
+        cat = open('photos/ty26hmpfe3f51.jpg', 'rb')
+        bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
+        bot.register_next_step_handler(message, oxf_ex1_num1)
+def oxf_ex1_num2(message):
+    if message.text.strip() == 'Her friends, Steven and Sarah, were present at the party.':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        but_main = types.KeyboardButton("Главная 🏡")
+        markup.add(but_main)
+        photo = open('photos/christmas-dinner-a-family-preparing-christmas-dinner-and-looking-involved_259150-56199.jpg', 'rb')
+        bot.send_message(message.chat.id, 'Awesome!')
+        bot.send_photo(message.chat.id, photo, 'Задание №3\n'
+                                               '\n'
+                                               'My friend finds inspiration in cooking(,) her family(,) and her dog.', reply_markup=markup)
+        bot.register_next_step_handler(message, oxf_ex1_num3)
+    elif message.text.strip() == 'Her friends, Steven, and Sarah, were present at the party.':
+        photo = open('photos/zato-ja-shablon.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo, 'Неправильно, попробуй ещё раз!')
+        bot.register_next_step_handler(message, oxf_ex1_num2)
+    elif message.text.strip() == 'Главная 🏡':
+        start(message)
+    else:
+        cat = open('photos/ty26hmpfe3f51.jpg', 'rb')
+        bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
+        bot.register_next_step_handler(message, oxf_ex1_num2)
+def oxf_ex1_num3(message):
+    if message.text.strip() == 'My friend finds inspiration in cooking, her family, and her dog.':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        but_main = types.KeyboardButton("Главная 🏡")
+        markup.add(but_main)
+        photo = open('photos/новый-молоток-желтый-шлем-стоковые-иллюстрации_csp6899697-transformed.jpg', 'rb')
+        bot.send_message(message.chat.id, 'Good job!!')
+        bot.send_photo(message.chat.id, photo, 'Work in progress...', reply_markup=markup)
+    elif message.text.strip() == 'My friend finds inspiration in cooking her family and her dog.':
+        photo = open('photos/Halloween_vedma_21285.jpg', 'rb')
+        bot.send_photo(message.chat.id, photo, 'Неправильно, попробуй ещё раз!')
+        bot.register_next_step_handler(message, oxf_ex1_num3)
+    elif message.text.strip() == 'Главная 🏡':
+        start(message)
+    else:
+        cat = open('photos/ty26hmpfe3f51.jpg', 'rb')
+        bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
+        bot.register_next_step_handler(message, oxf_ex1_num3)
 
 print('Working...')
 bot.infinity_polling()
