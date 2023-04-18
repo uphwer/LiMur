@@ -92,7 +92,7 @@ def answer(call):
         bot.send_message(call.message.chat.id, 'Упражнение №1\n'
                                                '\n'
                                                'Упражнение заключается в правильной постановке запятой.\n'
-                                               'Будет дано предложение с изображением, в котором надо выбрать, ставить ли запятую, в зависимости от смысла.', reply_markup=markup)
+                                               'Будет дано предложение с изображением, надо переписать предложение с запятой или без, в зависимости от смысла.', reply_markup=markup)
     elif call.data == 'oxf2':
         markup = types.InlineKeyboardMarkup()
         but_next = types.InlineKeyboardButton(text='Далее >>', callback_data='oxf_ex2.1')
