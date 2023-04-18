@@ -25,13 +25,12 @@ def about(message):
 def start(message):
     repmarkup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     inmarkup = types.InlineKeyboardMarkup()
-    bot.send_message(message.chat.id, f"Привет, {message.from_user.first_name}! Я — LiMur бот, помощник в изучении пунктуации английского языка!", reply_markup='')
     but_start = types.InlineKeyboardButton(text='Начать 🚀', callback_data='start')
     but_creators = types.InlineKeyboardButton(text='Создатели 💼', callback_data='creators')
     but_home = types.KeyboardButton('Главная 🏡')
     inmarkup.add(but_start, but_creators)
     repmarkup.add(but_home)
-    bot.send_message(message.chat.id, "Выбери интересующий раздел:", reply_markup=repmarkup)
+    bot.send_message(message.chat.id, f"Привет, {message.from_user.first_name}! Я — LiMur бот, помощник в изучении пунктуации английского языка!", reply_markup=repmarkup)
     bot.send_message(message.chat.id, "Начать — начать обучение\n"
                                       "Создатели — посмотреть создателей", reply_markup=inmarkup)
 
@@ -85,15 +84,27 @@ def answer(call):
                                                   'В этом предложении отсутствие оксфордской запятой совершенно меняет смысл:\n'
                                                   'на мероприятие должны прийти носороги по имени Вашингтон и Линкольн.', reply_markup=markup)
     elif call.data == 'oxf1':
-        markup = types.InlineKeyboardMarkup()
-        but_ex1 = types.InlineKeyboardButton(text='К заданиям >>', callback_data='oxfexs1')
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        but_ex1 = types.KeyboardButton("К заданиям 🌟")
+        but_main = types.KeyboardButton("Главная 🏡")
+        markup.add(but_ex1)
+        markup.add(but_main)
+        bot.send_message(call.message.chat.id, 'Упражнение №1\n'
+                                               '\n'
+                                               'Упражнение заключается в правильной постановке запятой\n'
+                                               'Будет дано предложение с изображением, в котором надо выбрать, ставить ли запятую, в зависимости от смысла', reply_markup=markup)
 
 @bot.message_handler(content_types=["text"])
 def text(message):
     if message.text.strip() == 'Главная 🏡':
         start(message)
+    elif message.text.strip() == 'К заданиям 🌟':
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        but_main = types.KeyboardButton("Главная 🏡")
+        markup.add(but_main)
+        bot.send_photo(message.chat.id, 'Hello world')
     else:
-        cat = open('photos/20141703160331.jpg', 'rb')
+        cat = open('photos/ty26hmpfe3f51.jpg', 'rb')
         bot.send_photo(message.chat.id, cat, 'Извини, я тебя не понял 😬')
 
 print('Working...')
