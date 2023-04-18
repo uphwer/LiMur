@@ -91,8 +91,66 @@ def answer(call):
         markup.add(but_main)
         bot.send_message(call.message.chat.id, 'Упражнение №1\n'
                                                '\n'
-                                               'Упражнение заключается в правильной постановке запятой\n'
-                                               'Будет дано предложение с изображением, в котором надо выбрать, ставить ли запятую, в зависимости от смысла', reply_markup=markup)
+                                               'Упражнение заключается в правильной постановке запятой.\n'
+                                               'Будет дано предложение с изображением, в котором надо выбрать, ставить ли запятую, в зависимости от смысла.', reply_markup=markup)
+    elif call.data == 'oxf2':
+        markup = types.InlineKeyboardMarkup()
+        but_next = types.InlineKeyboardButton(text='Далее >>', callback_data='oxf_ex2.1')
+        markup.add(but_next)
+        bot.send_message(call.message.chat.id, 'Упражнение №2\n'
+                                               '\n'
+                                               'Упражнение заключается в выборе подходящей картинки под предложение.\n'
+                                               'Будет дано предложение и две фотографии. Надо будет выбрать подходящую.', reply_markup=markup)
+    elif call.data == 'oxf_ex2.1':
+        markup = types.InlineKeyboardMarkup()
+        but_one = types.InlineKeyboardButton(text='1', callback_data='oxf_ex2.1cor')
+        but_two = types.InlineKeyboardButton(text='2', callback_data='oxf_ex2.1incor')
+        markup.add(but_one, but_two)
+        photo1 = open('photos/prnt.jpg', 'rb')
+        photo2 = open('photos/prnt1.jpg', 'rb')
+        bot.send_media_group(call.message.chat.id, [telebot.types.InputMediaPhoto(photo1), telebot.types.InputMediaPhoto(photo2)])
+        bot.send_message(call.message.chat.id, 'I love my parents, Lady Gaga, and Ryan Reynolds.', reply_markup=markup)
+
+    elif call.data == 'oxf_ex2.1incor':
+        markup = types.InlineKeyboardMarkup()
+        but_return = types.InlineKeyboardButton(text='<< Назад', callback_data='oxf_ex2.1')
+        markup.add(but_return)
+        bot.send_message(call.message.chat.id, 'Неправильно, попробуй ещё раз!', reply_markup=markup)
+
+    elif call.data == 'oxf_ex2.1cor':
+        markup = types.InlineKeyboardMarkup()
+        but_one = types.InlineKeyboardButton(text='1', callback_data='oxf_ex2.2incor')
+        but_two = types.InlineKeyboardButton(text='2', callback_data='oxf_ex2.2cor')
+        markup.add(but_one, but_two)
+        photo1 = open('photos/police.jpg', 'rb')
+        photo2 = open('photos/police1.png', 'rb')
+        bot.send_media_group(call.message.chat.id, [telebot.types.InputMediaPhoto(photo1), telebot.types.InputMediaPhoto(photo2)])
+        bot.send_message(call.message.chat.id, 'Steven turned and faced Susan, his sister, and a police officer.', reply_markup=markup)
+
+    elif call.data == 'oxf_ex2.2incor':
+        markup = types.InlineKeyboardMarkup()
+        but_return = types.InlineKeyboardButton(text='<< Назад', callback_data='oxf_ex2.1cor')
+        markup.add(but_return)
+        bot.send_message(call.message.chat.id, 'Неправильно, попробуй ещё раз!', reply_markup=markup)
+
+    elif call.data == 'oxf_ex2.2cor':
+        markup = types.InlineKeyboardMarkup()
+        but_back = types.InlineKeyboardButton(text='<< Назад', callback_data='ford')
+        markup.add(but_back)
+        photo1 = open('photos/full-length-portrait-of-a-confident-young-male-builder_171337-5191.jpg', 'rb')
+        bot.send_photo(call.message.chat.id, photo1, 'Work in progress...', reply_markup=markup)
+
+    elif call.data == 'ford':
+        markup = types.InlineKeyboardMarkup()
+        but_oxfex = types.InlineKeyboardButton(text='Примеры', callback_data='oxfex1')
+        but_oxf1 = types.InlineKeyboardButton(text='Упражнение №1', callback_data='oxf1')
+        but_oxf2 = types.InlineKeyboardButton(text='Упражнение №2', callback_data='oxf2')
+        but_back = types.InlineKeyboardButton(text='Назад', callback_data='start')
+        markup.add(but_oxfex, but_oxf1, but_oxf2)
+        markup.add(but_back)
+        bot.send_message(call.message.chat.id, 'Оксфордская запятая.\n'
+                                                'Оскфордская запятая (Oxford comma) — запятая, ставящаяся перед союзами and, or или nor,\n'
+                                                'а также перед последним пунктом в списке перечисляемых элементов.', reply_markup=markup)
 
 @bot.message_handler(content_types=["text"])
 def text(message):
@@ -154,11 +212,11 @@ def oxf_ex1_num2(message):
         bot.register_next_step_handler(message, oxf_ex1_num2)
 def oxf_ex1_num3(message):
     if message.text.strip() == 'My friend finds inspiration in cooking, her family, and her dog.':
-        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        but_main = types.KeyboardButton("Главная 🏡")
+        markup = types.InlineKeyboardMarkup()
+        but_main = types.InlineKeyboardButton(text='<< Назад', callback_data='ford')
         markup.add(but_main)
         photo = open('photos/новый-молоток-желтый-шлем-стоковые-иллюстрации_csp6899697-transformed.jpg', 'rb')
-        bot.send_message(message.chat.id, 'Good job!!')
+        bot.send_message(message.chat.id, 'Good job!')
         bot.send_photo(message.chat.id, photo, 'Work in progress...', reply_markup=markup)
     elif message.text.strip() == 'My friend finds inspiration in cooking her family and her dog.':
         photo = open('photos/Halloween_vedma_21285.jpg', 'rb')
